@@ -153,12 +153,15 @@ class LUKE(pl.LightningModule):
         return optimizer
 
     def train_dataloader(self):
-        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, num_workers=16)
+        return DataLoader(self.hparams.datasets['train_dataset'],
+                          batch_size=self.hparams.batch_size, shuffle=True, num_workers=16)
 
     def val_dataloader(self):
-        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, num_workers=16)
+        return DataLoader(self.hparams.datasets['val_dataset'],
+                          batch_size=self.hparams.batch_size, num_workers=16)
 
     def test_dataloader(self):
-        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, num_workers=16)
+        return DataLoader(self.hparams.datasets['test_dataset'],
+                          batch_size=self.hparams.batch_size, num_workers=16)
 
 

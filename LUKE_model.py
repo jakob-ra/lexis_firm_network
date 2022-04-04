@@ -125,7 +125,7 @@ class LUKE(pl.LightningModule):
             loss = output["loss"].mean()
 
             f1_scores = []
-            for idx, label_name in enumerate(rel_label_names):
+            for idx, label_name in enumerate(self.hparams.label_names):
                 label = [label[idx] for label in labels]
                 pred = [pred[idx] for pred in preds]
                 precision = metrics.precision_score(label, pred, zero_division=0)

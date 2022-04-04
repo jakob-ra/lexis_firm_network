@@ -39,7 +39,7 @@ class RelationExtractionDataset(Dataset):
 class LUKE(pl.LightningModule):
 
     def __init__(self, num_labels=None, lr=1e-5, batch_size=128, class_weights="equal",
-                 thresholds=0.5, weight_decay=0,
+                 thresholds=0.5, weight_decay=0, label_names=None,
                  datasets={'train_dataset': None, 'val_dataset': None, 'test_dataset': None}
                  ):
         super().__init__()
@@ -95,7 +95,7 @@ class LUKE(pl.LightningModule):
             loss = output["loss"].mean()
 
             f1_scores = []
-            for idx, label_name in enumerate(rel_label_names):
+            for idx, label_name in enumerate(self.hparams.label_names):
                 label = [label[idx] for label in labels]
                 pred = [pred[idx] for pred in preds]
 

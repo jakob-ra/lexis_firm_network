@@ -15,7 +15,7 @@ class RelationExtractionDataset(Dataset):
         self.data = data
         self.has_labels = has_labels
         self.tokenizer = LukeTokenizer.from_pretrained("studio-ousia/luke-base", task="entity_pair_classification")
-        self.max_len= max_len
+        self.max_len = max_len
 
     def __len__(self):
         return len(self.data)

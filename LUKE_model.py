@@ -138,13 +138,12 @@ class LUKE(pl.LightningModule):
             self.log(f'test_f1_macro_avg', sum(f1_scores) / len(f1_scores), prog_bar=True)
 
     def predict_step(self, batch, batch_idx):
-        output = self.common_step(batch, batch_idx)
-        loss = output['loss']
+        outputs = self(**batch)
+        logits = outputs.logits
 
-        preds = output['preds']
-        labels = output['labels']
+        preds = (torch.sigmoid(logits) > self.hparams.thresholds).float()
 
-        return {"loss": loss, "preds": preds, "labels": labels}
+        return {"preds": preds}
 
     def configure_optimizers(self):
         optimizer = AdamW(self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay,
